@@ -45,4 +45,38 @@ penguins |> count(island)
 penguins |> filter(species == "Gentoo" & body_mass > 5000)
 penguins |> filter(sex == "male" | sex == "female") |> count()
 penguins |> filter(body_mass < 3500 | bill_len < "35") |> count()
+
+##Selecting
+penguins |> select(species, island) |> head()
+penguins |> select(bill_len:body_mass) |> head()
+
+##Advanced usage of select
+penguins |> select(starts_with("bill")) |> head()
+penguins |> select(ends_with("s")) |> head()
+penguins |> select(contains("_")) |> head(n = 4)
+penguins |> select(!species) |> head(n = 4) ##selectign everything except species
+
+penguins |> select(starts_with("bill") | starts_with("f") | contains("body_mass")) |> head()
+penguins |> select(starts_with("b") | starts_with("f")) |> head()
+penguins |> distinct(year) |> head()
+penguins |> distinct(species, island) ## different combinations are possible
+
+
+
+##mutate fuction usage
+penguins |> 
+  mutate(bill_dim_ratio = bill_len / bill_dep) |> 
+  arrange(desc(bill_dim_ratio)) |> 
+  select(contains("_")) |> 
+  head()
+
+penguins |> 
+    mutate(body_mass_kg = body_mass/1000) |> head()
+
+penguins |> 
+    mutate(flipper_to_mass_ratio = flipper_len/body_mass) |>
+    arrange(desc(flipper_to_mass_ratio)) |> head()
+
+penguins |>  mutate(body_mass_kg = body_mass/1000) |>
+mutate(heavy = body_mass_kg > 4.5) |>  head()
 ```
