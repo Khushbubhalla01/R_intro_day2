@@ -31,5 +31,18 @@ penguins |> arrange(species, bill_len)
 penguins |> relocate(island, .after = body_mass) |> head()
 penguins |> arrange(desc(body_mass)) |> relocate(island, .after = body_mass) |> head()
 
+##filtering in single criteria and combinations
+penguins |> filter(body_mass > 3000) |> head()
+penguins |> filter(body_mass > 4000) |> count()
+penguins |> filter(body_mass > 4000) |> distinct(island)
 
+##filtering with and/or
+penguins |> filter(species == "Gentoo" & bill_len > 30) |> count()
+penguins |> filter(species == "Gentoo" | island == "Biscoe") |> count()
+
+penguins |> filter(species ==  "Adelie") |> count()
+penguins |> count(island)
+penguins |> filter(species == "Gentoo" & body_mass > 5000)
+penguins |> filter(sex == "male" | sex == "female") |> count()
+penguins |> filter(body_mass < 3500 | bill_len < "35") |> count()
 ```
