@@ -1,0 +1,35 @@
+---
+title: "Day 2 notes"
+format: html
+---
+### Packages
+```{r}
+#install.packages("tidyverse")
+library(tidyverse)
+tidyverse_packages()
+
+
+```
+## Import data
+
+```{r}
+read.csv(file = "data/penguin_dataset.csv" )
+penguins <- read.csv(file = "data/penguin_dataset.csv" )
+```
+
+## Data wrangling
+
+
+```{r}
+penguins |> count(island) |> arrange(n)
+
+penguins |> relocate(year, .after = island) |> head()
+
+penguins |> arrange (body_mass)
+penguins |> arrange(desc(flipper_len)) |> head()
+penguins |> arrange(species, bill_len)
+penguins |> relocate(island, .after = body_mass) |> head()
+penguins |> arrange(desc(body_mass)) |> relocate(island, .after = body_mass) |> head()
+
+
+```
