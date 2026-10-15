@@ -79,4 +79,44 @@ penguins |>
 
 penguins |>  mutate(body_mass_kg = body_mass/1000) |>
 mutate(heavy = body_mass_kg > 4.5) |>  head()
+
+##mutate and case when
+penguins |> 
+  mutate(flipper_class = case_when(
+    flipper_len < 190 ~ "short",
+    flipper_len <= 210 ~ "medium",
+    TRUE ~ "long"                       ##remaining or otherwise situation
+  )) |> 
+  distinct(species, flipper_class)
+```
+
+```{r}
+penguins |>
+  mutate(size = case_when(
+    body_mass < 2800  ~ "small",
+    body_mass <= 3800  ~ "medium",
+    TRUE ~ "big"
+  )) |> 
+  distinct(species, size) |> ggplot(
+mapping = aes(x=species,
+y=size,
+colour = size)) +
+    geom_point()
+
+
+## grouping data
+# Looks the same
+# Note "Groups: species [3]"
+penguins |> group_by(species)
+
+penguins |> 
+  group_by(species) |> 
+  summarize(mean_body_mass = mean(body_mass, na.rm = TRUE))
+
+penguins |> 
+  group_by(species) |> 
+  filter(body_mass == max(body_mass, na.rm = TRUE))
+
+
+
 ```
